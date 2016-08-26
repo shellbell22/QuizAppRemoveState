@@ -116,34 +116,6 @@ var showResults = function() {
     questionsPageElement.hide();
     resultsPageElement.show();
 };
-/*
-var showQuestions = function() {
-    resultsPageElement.hide();
-    questionsPageElement.show();
-};
-
-var resetScore = function() {
-    scoreElement.text(0);
-};
-
-var increaseScore = function() {
-    var score = parseInt(scoreElement.text(), 10);
-    scoreElement.text(score + 1);
-};
-*/
-
-var setQuestion = function(questionIndex) {
-    var question = QUESTIONS[questionIndex];
-    questionCurrentElement.text(questionIndex);
-    questionElement.text(question.text);
-    answersElement.empty();
-    for (var i=0; i<question.answers.length; i++) {
-        var answer = question.answers[i];
-        answersElement.append('<li><button type="button">' + answer + '</button></li>');
-    }
-};
-
-
 
 answersElement.on('click', 'button', function() {
     var choice = $(this).parent().index();
@@ -154,9 +126,13 @@ answersElement.on('click', 'button', function() {
 });
 
 restartButtonElement.click(function() {
-    setQuestion(0);
-    resetScore();
-    showQuestions();
+  resetGame(state);
+  renderQuestion(state, questionElement);
+  renderAnswer(state, answersElement);
+  renderScore(state, scoreElement, questionCurrentElement);
+  questionsPageElement.show();
+  resultsPageElement.hide();
+
 });
 
 $(document).ready(function() {
